@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     //Un commentaire
     console.log("Ça fonctionne!!!");
+
     var informations = [
         {
             id: "pizza",
@@ -31,5 +32,56 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     ]
 
+    if(document.querySelector('.page-item')) {
+        initialiserItem();
+    }
+
+    function initialiserItem() {
+
+        var url = window.location.search;
+        console.log(url);
+    
+        var params = new URLSearchParams(url);
+        console.log(params);
+    
+        var type = params.get('type');
+        console.log(type);
+    
+        //Autre façon de l'écrire
+        //var type = new URLSearchParams(window.location.search).get('type');
+    
+    
+        var contenu = informations.find(element => element.id === type);
+        console.log(contenu);
+    
+        var title = document.querySelector('.main-title');
+        title.innerHTML = contenu.title;
+    
+        var slogan = document.querySelector('.sub-title');
+        slogan.innerHTML = contenu.slogan;
+    
+        var desc = document.querySelector('.sub-description p');
+        desc.innerHTML = contenu.description;
+    
+        var image = document.querySelector('.sub-image img');
+        image.src = contenu.image;
+    
+        var list = document.querySelector('.type-list');
+        list.innerHTML = "";
+    
+        for(let i = 0 ; i < contenu.type.length ; i++) {
+            console.log(contenu.type[i]);
+            let li = document.createElement('li');
+            li.innerHTML = contenu.type[i];
+            //Ajoute un li à la fin de la liste
+            list.appendChild(li);
+        }
+    
+        var thumbnails = document.querySelectorAll('.thumb img');
+        for(let x = 0 ; x < thumbnails.length ; x++) {
+            var thumb = thumbnails[x];
+            thumb.src = contenu.gallery[x];
+        }
+    }
 
 });
